@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: Loan Calculator
+  version: "1.0"
+servers:
+- url: localhost:8080
+paths:
+  /calculate-loan:
+    post:
+      summary: Calculates loan repayments.
+      description: Add a new customer record
+      operationId: calculate-loan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/calculateloan_body'
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanRepayments'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "405":
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    LoanRepayments:
+      type: object
+      properties:
+        monthly_repayments:
+          type: integer
+        total_interest_payable:
+          type: integer
+        amount_owing:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoanRepayments_amount_owing'
+      example:
+        monthly_repayments: 0
+        amount_owing:
+        - principal: 5
+          total: 2
+          year: 1
+          interest: 5
+        - principal: 5
+          total: 2
+          year: 1
+          interest: 5
+        total_interest_payable: 6
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    calculateloan_body:
+      type: object
+      properties:
+        loan_amount:
+          type: integer
+        loan_type:
+          type: string
+        payment_frequency:
+          type: string
+        interest_rate:
+          type: number
+        loan_term:
+          type: integer
+    LoanRepayments_amount_owing:
+      type: object
+      properties:
+        year:
+          type: integer
+        interest:
+          type: integer
+        principal:
+          type: integer
+        total:
+          type: integer
+      example:
+        principal: 5
+        total: 2
+        year: 1
+        interest: 5
