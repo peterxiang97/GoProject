@@ -21,6 +21,7 @@ import (
 
 func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
 	requestBodyBytes, _ := ioutil.ReadAll(r.Body)
 	var  CalculateLoan CalculateloanBody
 	json.Unmarshal(requestBodyBytes, &CalculateLoan)
@@ -42,7 +43,7 @@ func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 		for j := int32(0); j<int32(n); j++{
 			
 			var LoanRepaymentsAmountO LoanRepaymentsAmountOwing
-			LoanRepaymentsAmountO.Year = j
+			LoanRepaymentsAmountO.Year = j+1
 			LoanRepaymentsAmountO.Principal = int32(P)
 			LoanRepaymentsAmountO.Interest = int32(tempTotalInterest - (tempMonthlyRepayment * 12 * float64(j)))
 			LoanRepaymentsAmountO.Total = int32(P + (tempTotalInterest - (tempMonthlyRepayment * 12 * float64(j))))
@@ -59,21 +60,40 @@ func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 		
 		loanRepay.MonthlyRepayments = int32(tempMonthlyRepayment)
 
+		
+		for j := int32(0); j<int32(n); j++{
+			
+			var LoanRepaymentsAmountO LoanRepaymentsAmountOwing
+			LoanRepaymentsAmountO.Year = j+1
+
+			for k := 0; k < 12; k++{
+				tempTotalInterest = tempTotalInterest - (P * i / 12)
+				P = P - (tempMonthlyRepayment - (P * i / 12))
+			}
+			LoanRepaymentsAmountO.Principal = int32(P)
+			LoanRepaymentsAmountO.Interest = int32(tempTotalInterest)
+			LoanRepaymentsAmountO.Total = int32(P + tempTotalInterest)
+			loanRepay.AmountOwing = append(loanRepay.AmountOwing, LoanRepaymentsAmountO)
+		}
+
+
+
 		/* 
-			every month: monthly repayment - interest (P * i/12), is the money that will be taken away from Principal
+			every month: monthly repayment - interest (P * 1/12), is the money that will be taken away from Principal
 			so for every year a for loop of 12 will need to represent monthly payment, the final results at the end of the
 			for loop will be the yearly total.
 		
-		*/
-		
-		
+		*/	
 	}
 	
 	
+	jresponse,_:=json.Marshal(&loanRepay) //convert CalculateloanBody type to string for sending back
+
+	w.Write(jresponse)
 	//Test1 := strconv.Itoa(Test)
 	//log.Printf("%f\n", Answer)
 	//log.Printf(CalculateLoan.LoanType)
-	w.WriteHeader(http.StatusOK)
+	
 	
 }
 
