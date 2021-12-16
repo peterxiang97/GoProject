@@ -20,3 +20,11 @@ jobs:
 
     - name: Build
       run: go build 
+      
+    - name: Deploy      
+      uses: google-github-actions/deploy-appengine@v0.4.0      
+      with:         
+        deliverables: ./app.yaml
+        project_id: superb-dream-332900
+        credentials: '${{ secrets.ZEYUXIANG}}'
+
