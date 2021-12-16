@@ -40,10 +40,10 @@ func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 		loanRepay.TotalInterestPayable = int32(tempTotalInterest)
 		loanRepay.MonthlyRepayments = int32(tempMonthlyRepayment)
 
-		for j := int32(0); j<int32(n); j++{
+		for j := int32(0); j<int32(n+1); j++{
 			
 			var LoanRepaymentsAmountO LoanRepaymentsAmountOwing
-			LoanRepaymentsAmountO.Year = j+1
+			LoanRepaymentsAmountO.Year = j
 			LoanRepaymentsAmountO.Principal = int32(P)
 			LoanRepaymentsAmountO.Interest = int32(tempTotalInterest - (tempMonthlyRepayment * 12 * float64(j)))
 			LoanRepaymentsAmountO.Total = int32(P + (tempTotalInterest - (tempMonthlyRepayment * 12 * float64(j))))
@@ -61,10 +61,10 @@ func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 		loanRepay.MonthlyRepayments = int32(tempMonthlyRepayment)
 
 		
-		for j := int32(0); j<int32(n); j++{
+		for j := int32(0); j<int32(n+1); j++{
 			
 			var LoanRepaymentsAmountO LoanRepaymentsAmountOwing
-			LoanRepaymentsAmountO.Year = j+1
+			LoanRepaymentsAmountO.Year = j
 
 			for k := 0; k < 12; k++{
 				tempTotalInterest = tempTotalInterest - (P * i / 12)
