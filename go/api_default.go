@@ -24,7 +24,7 @@ func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	requestBodyBytes, _ := ioutil.ReadAll(r.Body)
 	var  CalculateLoan CalculateloanBody
-	json.Unmarshal(requestBodyBytes, &CalculateLoan)
+	json.Unmarshal(requestBodyBytes, &CalculateLoan) //nolint
 	P := float64(CalculateLoan.LoanAmount)
 	i := float64(CalculateLoan.InterestRate)
 	n := float64(CalculateLoan.LoanTerm)
@@ -89,7 +89,7 @@ func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 	
 	jresponse,_:=json.Marshal(&loanRepay) //convert CalculateloanBody type to string for sending back
 
-	w.Write(jresponse)
+	w.Write(jresponse) //nolint
 	//Test1 := strconv.Itoa(Test)
 	//log.Printf("%f\n", Answer)
 	//log.Printf(CalculateLoan.LoanType)

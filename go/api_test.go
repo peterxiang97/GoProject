@@ -63,7 +63,7 @@ func TestCalculateLoan(t *testing.T) {
        	CalculateLoan(response, req)
 		requestBodyBytes, _ := ioutil.ReadAll(response.Body)
 		var  CalculateLoan1 LoanRepayments
-		json.Unmarshal(requestBodyBytes, &CalculateLoan1)
+		json.Unmarshal(requestBodyBytes, &CalculateLoan1)  //nolint
 		
 
         if CalculateLoan1.MonthlyRepayments != Expected.MonthlyRepayments {
@@ -133,7 +133,7 @@ func TestCalculateLoan(t *testing.T) {
        	CalculateLoan(response, req)
 		requestBodyBytes, _ := ioutil.ReadAll(response.Body)
 		var  CalculateLoan1 LoanRepayments
-		json.Unmarshal(requestBodyBytes, &CalculateLoan1)
+		json.Unmarshal(requestBodyBytes, &CalculateLoan1)  //nolint
 		
 
         if CalculateLoan1.MonthlyRepayments != Expected.MonthlyRepayments {
