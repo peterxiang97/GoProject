@@ -74,7 +74,7 @@ func TestCalculateLoan(t *testing.T) {
         }
 		for i := 0; i <= 3; i++{
 			if CalculateLoan1.AmountOwing[i] != Expected.AmountOwing[i]{
-				t.Errorf("wrong amount Owing")
+				t.Errorf("wrong amount Owing '%d'", i)
 			}
 			
 		}
@@ -145,7 +145,7 @@ func TestCalculateLoan(t *testing.T) {
 		
 		for i := 0; i <= 3; i++{
 			if CalculateLoan1.AmountOwing[i] != Expected.AmountOwing[i]{
-				t.Errorf("wrong amount Owing")
+				t.Errorf("wrong amount Owing '%d'", i)
 			}
 			
 		}
