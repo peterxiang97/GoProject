@@ -57,7 +57,7 @@ func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 		tempMonthlyRepayment := float64(P * i * math.Pow(1+i,n*12) /(math.Pow(1+i,n*12)-1))
 		tempTotalInterest := float64(tempMonthlyRepayment*n*12- P)
 
-		
+		loanRepay.TotalInterestPayable = int32(tempTotalInterest)
 		loanRepay.MonthlyRepayments = int32(tempMonthlyRepayment)
 
 		
