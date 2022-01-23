@@ -41,7 +41,7 @@ func TestCalculateLoan(t *testing.T) {
 				LoanRepaymentsAmountOwing{
 				
 					Year: int32(2),
-					Interest: int32(1125),
+					Interest: int32(1225),
 					Principal: int32(35000),
 					Total: int32(36225),
 				},
